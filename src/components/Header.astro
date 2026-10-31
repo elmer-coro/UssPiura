@@ -1,0 +1,142 @@
+---
+const links = [
+  { label: "La Universidad", href: "#universidad" },
+  { label: "Carreras", href: "#carreras" },
+  { label: "Admisión", href: "#admision" },
+  { label: "Investigación", href: "#investigacion" },
+  { label: "Vida Universitaria", href: "#vida-universitaria" },
+  { label: "Noticias", href: "#noticias" },
+];
+---
+
+<header class="relative z-40 bg-white">
+  <nav
+    class="container-uss flex min-h-17 items-center justify-between gap-5"
+    aria-label="Navegación principal"
+  >
+    <a
+      href="/"
+      class="flex shrink-0 items-center gap-2.5"
+      aria-label="USS Inicio"
+    >
+      <span
+        class="text-[42px] font-black leading-none tracking-[-3px] text-uss-text font-serif w-20"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          version="1.0"
+          width="100%"
+          height="100%"
+          viewBox="0 0 480.000000 204.000000"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <g
+            transform="translate(0.000000,204.000000) scale(0.100000,-0.100000)"
+            fill="#000000"
+            stroke="none"
+          >
+            <path
+              d="M22 1023 l3 -948 663 -3 662 -2 0 949 0 950 -67 -29 c-38 -16 -120 -51 -183 -78 l-115 -49 -3 -687 -2 -686 -293 2 -292 3 -3 685 -2 685 -177 75 c-96 41 -180 77 -184 78 -5 2 -8 -410 -7 -945z"
+            ></path>
+            <path
+              d="M1732 1429 l3 -542 205 -87 c113 -49 327 -139 475 -202 l270 -115 3 -207 2 -206 183 2 182 3 3 331 2 331 -97 41 c-54 22 -224 94 -378 160 -154 65 -326 138 -382 162 l-103 43 0 229 0 228 295 0 295 0 0 -148 0 -147 148 -62 c81 -35 164 -69 185 -78 l37 -15 0 410 0 410 -665 0 -665 0 2 -541z"
+            ></path>
+            <path
+              d="M3442 1428 l3 -542 330 -141 c182 -77 394 -167 472 -200 l143 -60 2 -205 3 -205 183 -3 182 -2 -2 336 -3 336 -205 87 c-113 48 -325 138 -472 201 l-268 113 0 229 0 228 290 0 290 0 0 -146 0 -145 33 -14 c17 -7 101 -43 185 -78 l152 -65 0 409 0 409 -660 0 -660 0 2 -542z"
+            ></path>
+            <path
+              d="M1730 270 l0 -200 472 0 c259 0 469 2 467 4 -2 3 -191 84 -419 181 -228 97 -435 185 -459 196 -24 10 -47 19 -52 19 -5 0 -9 -90 -9 -200z"
+            ></path>
+            <path
+              d="M3440 271 l0 -201 467 0 c264 0 463 4 458 9 -6 4 -64 31 -130 59 -66 28 -264 112 -440 187 -176 76 -328 139 -337 142 -17 5 -18 -9 -18 -196z"
+            ></path>
+          </g>
+        </svg>
+      </span>
+      <span class="h-9 w-px bg-uss-green"></span>
+      <span class="text-[10px] font-bold uppercase leading-[1.2] tracking-wide">
+        Universidad<br />Señor de Sipán
+      </span>
+    </a>
+
+    <div class="hidden items-center gap-5 xl:flex">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class="flex items-center gap-1 whitespace-nowrap text-[11px] font-medium transition hover:text-green-700"
+          >
+            {link.label}
+            <span class="text-gray-400">⌄</span>
+          </a>
+        ))
+      }
+    </div>
+
+    <a
+      href="#admision"
+      class="hidden shrink-0 rounded-lg bg-uss-green px-5 py-2.5 text-[11px] font-bold transition hover:bg-uss-green-hover lg:inline-flex"
+    >
+      Postula ahora
+    </a>
+
+    <button
+      id="menu-toggle"
+      type="button"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      class="flex h-10 w-10 items-center justify-center rounded border border-gray-200 text-xl xl:hidden"
+    >
+      ☰
+    </button>
+  </nav>
+
+  <div
+    id="mobile-menu"
+    class="hidden border-t border-gray-200 bg-white px-6 py-4 xl:hidden"
+  >
+    <div class="flex flex-col gap-1">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class="rounded-md px-3 py-3 text-sm hover:bg-uss-light"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a
+        href="#admision"
+        class="mt-2 rounded-md bg-uss-green px-4 py-3 text-center text-sm font-bold"
+      >
+        Postula ahora
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>("#menu-toggle");
+  const menu = document.querySelector<HTMLDivElement>("#mobile-menu");
+
+  toggle?.addEventListener("click", () => {
+    if (!menu || !toggle) return;
+
+    const opening = menu.classList.contains("hidden");
+    menu.classList.toggle("hidden", !opening);
+    toggle.setAttribute("aria-expanded", String(opening));
+    toggle.setAttribute("aria-label", opening ? "Cerrar menú" : "Abrir menú");
+    toggle.textContent = opening ? "×" : "☰";
+  });
+
+  menu?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      menu?.classList.add("hidden");
+      toggle?.setAttribute("aria-expanded", "false");
+      toggle?.setAttribute("aria-label", "Abrir menú");
+      if (toggle) toggle.textContent = "☰";
+    });
+  });
+</script>
