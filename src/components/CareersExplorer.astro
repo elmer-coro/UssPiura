@@ -1,0 +1,375 @@
+---
+import { careers, faculties } from "../data/careers.js";
+---
+
+<section id="explorador" class="bg-slate-50 py-16">
+  <div class="container-uss">
+    <div class="mb-8">
+      <span class="mb-3 block h-1 w-10 bg-uss-green"></span>
+      <p class="text-xs font-bold uppercase tracking-[2px] text-green-700">
+        Encuentra tu futuro
+      </p>
+      <h2 class="mt-2 text-3xl font-black text-uss-text sm:text-4xl">
+        Nuestras carreras
+      </h2>
+    </div>
+
+    <div class="grid items-start gap-6 lg:grid-cols-[260px_1fr]">
+      <!-- LISTADO DE CARRERAS -->
+      <aside class="rounded-xl border border-slate-200 bg-white p-4">
+        <h3 class="mb-4 text-sm font-black text-uss-text">
+          Selecciona una carrera
+        </h3>
+
+        <label class="relative mb-4 block">
+          <span class="sr-only">Buscar carrera</span>
+          <input
+            id="career-search"
+            type="search"
+            placeholder="Buscar carrera..."
+            class="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-xs outline-none transition focus:border-uss-green focus:ring-2 focus:ring-green-100"
+          />
+        </label>
+
+        <div id="career-list" class="flex flex-col gap-2">
+          {
+            faculties.map((faculty) => (
+              <div class="mb-3" data-faculty-group={faculty.id}>
+                <p class="mb-2 px-2 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+                  {faculty.shortName}
+                </p>
+
+                <div class="flex flex-col gap-1">
+                  {careers
+                    .filter((career) => career.faculty === faculty.shortName)
+                    .map((career) => (
+                      <button
+                        type="button"
+                        data-career={career.id}
+                        data-name={career.name.toLowerCase()}
+                        class:list={[
+                          "career-option flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-xs font-medium transition hover:bg-green-50",
+                          career.id === "enfermeria"
+                            ? "active-career bg-uss-green text-uss-dark"
+                            : "text-slate-700",
+                        ]}
+                      >
+                        <span class="text-base">◈</span>
+                        <span class="flex-1 leading-snug">{career.name}</span>
+                        <span>›</span>
+                      </button>
+                    ))}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <p
+          class="mt-4 border-t border-slate-100 pt-4 text-center text-[11px] text-slate-400"
+        >
+          {careers.length} carreras profesionales
+        </p>
+      </aside>
+
+      <!-- INFORMACIÓN DE LA CARRERA -->
+      <div class="min-w-0">
+        <article
+          class="overflow-hidden rounded-xl border border-slate-200 bg-white"
+        >
+          <!-- CABECERA -->
+          <div class="relative overflow-hidden bg-white p-6 sm:p-8">
+            <div class="relative z-10 max-w-2xl">
+              <div class="mb-5 flex items-center gap-2 text-xs text-slate-400">
+                <a href="/" class="hover:text-green-700">Inicio</a>
+                <span>›</span>
+                <span>Carreras</span>
+                <span>›</span>
+                <span id="career-breadcrumb" class="font-bold text-slate-700">
+                  Enfermería
+                </span>
+              </div>
+
+              <span
+                id="career-faculty"
+                class="rounded-md bg-green-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-green-700"
+              >
+                FACSA
+              </span>
+
+              <h2
+                id="career-title"
+                class="mt-5 max-w-xl text-3xl font-black tracking-tight text-uss-text sm:text-4xl"
+              >
+                Enfermería
+              </h2>
+
+              <p
+                id="career-description"
+                class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600"
+              >
+                Formamos profesionales calificados para brindar un cuidado
+                humanizado y resolver situaciones propias de la enfermería.
+              </p>
+
+              <div
+                class="mt-7 grid gap-5 border-t border-slate-100 pt-6 sm:grid-cols-3"
+              >
+                <div class="flex items-start gap-3">
+                  <span class="text-2xl text-green-500">▦</span>
+                  <div>
+                    <p class="text-[10px] text-slate-500">
+                      Duración de estudios
+                    </p>
+                    <p
+                      id="career-duration"
+                      class="mt-1 text-xs font-bold text-uss-text"
+                    >
+                      10 ciclos académicos
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <span class="text-2xl text-green-500">◇</span>
+                  <div>
+                    <p class="text-[10px] text-slate-500">Grado académico</p>
+                    <p
+                      id="career-degree"
+                      class="mt-1 text-xs font-bold text-uss-text"
+                    >
+                      Bachiller en Enfermería
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <span class="text-2xl text-green-500">♧</span>
+                  <div>
+                    <p class="text-[10px] text-slate-500">Título profesional</p>
+                    <p
+                      id="career-title-professional"
+                      class="mt-1 text-xs font-bold text-uss-text"
+                    >
+                      Licenciado en Enfermería
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-green-50"
+            >
+            </div>
+            <div
+              class="pointer-events-none absolute -bottom-16 right-0 h-24 w-32 -skew-x-12 bg-uss-green"
+            >
+            </div>
+          </div>
+
+          <!-- PESTAÑAS -->
+          <div
+            class="flex flex-wrap gap-2 border-t border-slate-100 bg-slate-50 p-4"
+          >
+            <button
+              type="button"
+              data-tab="plan"
+              class="career-tab rounded-lg bg-uss-green px-4 py-3 text-xs font-bold text-uss-dark"
+            >
+              ▣ Plan de estudios
+            </button>
+
+            <button
+              type="button"
+              data-tab="profile"
+              class="career-tab rounded-lg border border-slate-200 bg-white px-4 py-3 text-xs font-bold text-slate-600 hover:border-uss-green"
+            >
+              ♙ Perfil y competencias
+            </button>
+
+            <button
+              type="button"
+              data-tab="certifications"
+              class="career-tab rounded-lg border border-slate-200 bg-white px-4 py-3 text-xs font-bold text-slate-600 hover:border-uss-green"
+            >
+              ♙ Certificaciones progresivas
+            </button>
+          </div>
+
+          <!-- CONTENIDO -->
+          <div class="min-h-56 p-6 sm:p-8">
+            <div id="tab-plan" class="career-panel">
+              <h3 class="text-xl font-black text-uss-text">Plan de estudios</h3>
+
+              <p
+                id="career-plan"
+                class="mt-4 max-w-2xl text-sm leading-7 text-slate-600"
+              >
+                El plan de estudios de Enfermería está pendiente de incorporar.
+              </p>
+
+              <a
+                id="career-plan-link"
+                href="#contacto-carrera"
+                class="mt-6 inline-flex items-center gap-3 rounded-lg border border-uss-green px-5 py-3 text-xs font-bold text-green-700 transition hover:bg-uss-green hover:text-uss-dark"
+              >
+                Consultar plan de estudios
+                <span>→</span>
+              </a>
+            </div>
+
+            <div id="tab-profile" class="career-panel hidden">
+              <h3 class="text-xl font-black text-uss-text">
+                Perfil y competencias
+              </h3>
+
+              <p
+                id="career-profile"
+                class="mt-4 max-w-2xl text-sm leading-7 text-slate-600"
+              >
+              </p>
+            </div>
+
+            <div id="tab-certifications" class="career-panel hidden">
+              <h3 class="text-xl font-black text-uss-text">
+                Certificaciones progresivas
+              </h3>
+
+              <p
+                id="career-certifications"
+                class="mt-4 max-w-2xl text-sm leading-7 text-slate-600"
+              >
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .career-option.active-career {
+    background-color: var(--color-uss-green, #80f000);
+    color: #172018;
+    font-weight: 800;
+  }
+
+  .career-tab.active-tab {
+    background-color: var(--color-uss-green, #80f000);
+    border-color: transparent;
+    color: #172018;
+  }
+</style>
+
+<script define:vars={{ careers }}>
+  const careerButtons = document.querySelectorAll("[data-career]");
+  const careerTabs = document.querySelectorAll("[data-tab]");
+  const searchInput = document.querySelector("#career-search");
+
+  const fields = {
+    title: document.querySelector("#career-title"),
+    breadcrumb: document.querySelector("#career-breadcrumb"),
+    faculty: document.querySelector("#career-faculty"),
+    description: document.querySelector("#career-description"),
+    duration: document.querySelector("#career-duration"),
+    degree: document.querySelector("#career-degree"),
+    professionalTitle: document.querySelector("#career-title-professional"),
+    plan: document.querySelector("#career-plan"),
+    profile: document.querySelector("#career-profile"),
+    certifications: document.querySelector("#career-certifications"),
+  };
+
+  function selectCareer(id) {
+    const career = careers.find((item) => item.id === id);
+    if (!career) return;
+
+    fields.title.textContent = career.name;
+    fields.breadcrumb.textContent = career.name;
+    fields.faculty.textContent = career.faculty;
+    fields.description.textContent = career.description;
+    fields.duration.textContent = career.duration;
+    fields.degree.textContent = career.degree;
+    fields.professionalTitle.textContent = career.professionalTitle;
+    fields.plan.textContent = career.studyPlan;
+    fields.profile.textContent = career.profile;
+    fields.certifications.textContent = career.certifications;
+
+    careerButtons.forEach((button) => {
+      const active = button.dataset.career === id;
+      button.classList.toggle("active-career", active);
+    });
+
+    document.querySelector("#tab-plan").classList.remove("hidden");
+
+    document.querySelectorAll(".career-panel").forEach((panel) => {
+      panel.classList.add("hidden");
+    });
+
+    document.querySelector("#tab-plan").classList.remove("hidden");
+
+    careerTabs.forEach((tab) => {
+      tab.classList.toggle("active-tab", tab.dataset.tab === "plan");
+    });
+  }
+
+  careerButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      selectCareer(button.dataset.career);
+    });
+  });
+
+  careerTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const selectedTab = tab.dataset.tab;
+
+      document.querySelectorAll(".career-panel").forEach((panel) => {
+        panel.classList.add("hidden");
+      });
+
+      document.querySelector(`#tab-${selectedTab}`).classList.remove("hidden");
+
+      careerTabs.forEach((item) => {
+        item.classList.toggle("active-tab", item === tab);
+      });
+    });
+  });
+
+  searchInput?.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase().trim();
+
+    document.querySelectorAll(".career-option").forEach((button) => {
+      const matches = button.dataset.name.includes(query);
+      button.classList.toggle("hidden", !matches);
+    });
+
+    document.querySelectorAll("[data-faculty-group]").forEach((group) => {
+      const visible = [...group.querySelectorAll(".career-option")].some(
+        (button) => !button.classList.contains("hidden"),
+      );
+
+      group.classList.toggle("hidden", !visible);
+    });
+  });
+
+  document.querySelectorAll("[data-faculty-filter]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const faculty = button.dataset.facultyFilter;
+      const firstCareer = careers.find((career) => {
+        return career.faculty === faculty;
+      });
+
+      if (firstCareer) {
+        selectCareer(firstCareer.id);
+
+        document.querySelector("#explorador").scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    });
+  });
+
+  selectCareer("enfermeria");
+</script>

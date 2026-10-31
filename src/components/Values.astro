@@ -1,0 +1,38 @@
+---
+const values = [
+  { name: "Respeto", icon: "🤝" },
+  { name: "Responsabilidad", icon: "🛡️" },
+  { name: "Honestidad", icon: "⚖️" },
+  { name: "Solidaridad", icon: "👥" },
+  { name: "Innovación", icon: "💡" },
+  { name: "Compromiso", icon: "🏆" },
+];
+---
+
+<section id="valores" class="bg-white py-16">
+  <div class="container-uss">
+    <span class="mb-3 block h-1 w-10 bg-uss-green"></span>
+
+    <p class="text-xs font-bold uppercase tracking-[2px] text-green-700">
+      Nuestra identidad
+    </p>
+
+    <h2 class="mt-2 text-3xl font-black text-uss-text sm:text-4xl">
+      Nuestros valores
+    </h2>
+
+    <div class="mt-9 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+      {
+        values.map((value) => (
+          <article class="group flex min-h-36 flex-col items-center justify-center rounded-xl border border-slate-200 bg-white p-5 text-center transition hover:-translate-y-1 hover:border-uss-green hover:shadow-lg">
+            <span class="text-4xl transition group-hover:scale-110">
+              {value.icon}
+            </span>
+
+            <h3 class="mt-4 text-sm font-bold text-uss-text">{value.name}</h3>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

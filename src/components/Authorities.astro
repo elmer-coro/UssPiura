@@ -1,0 +1,77 @@
+---
+const authorities = [
+  {
+    name: "Jennifer Denisse Sullon Chinga",
+    position: "Director General de la Filial Piura",
+    image: "/public/director-general.webp",
+  },
+  {
+    name: "Eduardo Alonso Sanchez Ruiz",
+    position: "Director Académico",
+    image: "/public/director-academico.webp",
+  },
+  {
+    name: "Lira Mercedes Frias Arambulo",
+    position: "Coordinador de FACSA",
+    image: "/public/coordinador-facsa.webp",
+  },
+  {
+    name: "Raul Maximilano Fernandez Flores",
+    position: "Coordinador de FACEM y FIAU",
+    image: "/public/coordinador-facem.webp",
+  },
+  {
+    name: "Liseth Vanessa Quintana Montalvo",
+    position: "Coordinador de Bienestar Universitario",
+    image: "/public/coordinador-bienestar.webp",
+  },
+];
+---
+
+<section id="autoridades" class="bg-uss-light py-16">
+  <div class="container-uss">
+    <div class="mb-9">
+      <span class="mb-3 block h-1 w-10 bg-uss-green"></span>
+
+      <p class="text-xs font-bold uppercase tracking-[2px] text-green-700">
+        Liderazgo institucional
+      </p>
+
+      <h2
+        class="mt-2 text-3xl font-black tracking-tight text-uss-text sm:text-4xl"
+      >
+        Nuestras autoridades
+      </h2>
+
+      <p class="mt-3 max-w-2xl text-sm leading-relaxed text-slate-500">
+        Conoce a las autoridades responsables de la gestión y el desarrollo
+        académico de nuestra filial.
+      </p>
+    </div>
+
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+      {
+        authorities.map((person) => (
+          <article class="group overflow-hidden rounded-xl border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            <div class="overflow-hidden">
+              <img
+                src={person.image}
+                alt={`Fotografía de ${person.name}`}
+                loading="lazy"
+                class="aspect-[4/4.2] w-full object-cover transition duration-500 group-hover:scale-105"
+              />
+            </div>
+
+            <div class="border-t-2 border-transparent p-4 text-center transition group-hover:border-uss-green">
+              <h3 class="text-sm font-bold text-uss-text">{person.name}</h3>
+
+              <p class="mt-2 text-xs leading-relaxed text-slate-500">
+                {person.position}
+              </p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

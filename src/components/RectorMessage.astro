@@ -1,0 +1,48 @@
+---
+const rector = {
+  name: "Jennifer Denisse Sullon Chinga",
+  position: "Rector de la Universidad Señor de Sipán",
+  image: "/public/mensaje-director.webp",
+  message:
+    "En la Universidad Señor de Sipán creemos en el poder de la educación para transformar vidas. Nuestro compromiso es brindar una formación integral, con calidad académica e innovación, contribuyendo al desarrollo de nuestra región y del país.",
+};
+---
+
+<section id="mensaje-rector" class="bg-white py-16">
+  <div
+    class="container-uss grid items-center gap-10 lg:grid-cols-[0.8fr_1.5fr]"
+  >
+    <div class="relative">
+      <div class="absolute -bottom-3 -left-3 h-24 w-24 bg-uss-green"></div>
+
+      <img
+        src={rector.image}
+        alt={`Fotografía de ${rector.name}, rector de la USS`}
+        class="relative z-10 aspect-[4/3] w-full rounded-lg object-cover"
+      />
+    </div>
+
+    <div>
+      <span class="mb-4 block h-1 w-10 bg-uss-green"></span>
+
+      <span class="text-xs font-bold uppercase tracking-[2px] text-green-700">
+        Nuestra institución
+      </span>
+
+      <h2
+        class="mt-3 text-3xl font-black tracking-tight text-uss-text sm:text-4xl"
+      >
+        Mensaje del rector
+      </h2>
+
+      <blockquote class="mt-6 text-lg leading-relaxed text-slate-600">
+        “{rector.message}”
+      </blockquote>
+
+      <div class="mt-7 border-l-4 border-uss-green pl-4">
+        <p class="font-bold text-uss-text">{rector.name}</p>
+        <p class="mt-1 text-sm text-slate-500">{rector.position}</p>
+      </div>
+    </div>
+  </div>
+</section>

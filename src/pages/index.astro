@@ -1,27 +1,19 @@
 ---
 import BaseLayout from "../layouts/Layout.astro";
-import TopBar from "../components/TopBar.astro";
-import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
 import Highlights from "../components/Highlights.astro";
 import Programs from "../components/Programs.astro";
 import News from "../components/News.astro";
-import Footer from "../components/Footer.astro";
 ---
 
 <BaseLayout
   title="Universidad Señor de Sipán | Formamos el futuro"
   description="Descubre las carreras, la innovación y la vida universitaria de la USS."
 >
-  <TopBar />
-  <Header />
-
   <main>
     <Hero />
     <Highlights />
     <Programs />
     <News />
   </main>
-
-  <Footer />
 </BaseLayout>

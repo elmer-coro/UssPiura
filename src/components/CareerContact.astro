@@ -1,0 +1,227 @@
+---
+import { careers } from "../data/careers.js";
+---
+
+<section id="contacto-carrera" class="bg-white py-16">
+  <div class="container-uss">
+    <div
+      class="grid gap-8 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:p-9 lg:grid-cols-[0.8fr_1.5fr_0.7fr] lg:items-center"
+    >
+      <div>
+        <span class="mb-4 block h-1 w-10 bg-uss-green"></span>
+
+        <p class="text-xs font-bold uppercase tracking-[2px] text-green-700">
+          Estamos para ayudarte
+        </p>
+
+        <h2 class="mt-3 text-3xl font-black leading-tight text-uss-text">
+          ¿Tienes dudas sobre nuestra carrera?
+        </h2>
+
+        <p class="mt-4 text-sm leading-relaxed text-slate-500">
+          Déjanos tus datos y un asesor de admisión podrá comunicarse contigo.
+        </p>
+      </div>
+
+      <form id="career-contact-form" class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label
+            for="student-name"
+            class="mb-2 block text-xs font-bold text-slate-700"
+          >
+            Nombre completo
+          </label>
+          <input
+            id="student-name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            placeholder="Ingresa tus nombres y apellidos"
+            required
+            minlength="3"
+            class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-uss-green focus:ring-2 focus:ring-green-100"
+          />
+        </div>
+
+        <div>
+          <label
+            for="student-phone"
+            class="mb-2 block text-xs font-bold text-slate-700"
+          >
+            Celular
+          </label>
+          <input
+            id="student-phone"
+            name="phone"
+            type="tel"
+            autocomplete="tel"
+            inputmode="numeric"
+            pattern="[0-9]{9}"
+            maxlength="9"
+            placeholder="999 999 999"
+            required
+            class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-uss-green focus:ring-2 focus:ring-green-100"
+          />
+        </div>
+
+        <div>
+          <label
+            for="student-email"
+            class="mb-2 block text-xs font-bold text-slate-700"
+          >
+            Correo electrónico
+          </label>
+          <input
+            id="student-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="correo@ejemplo.com"
+            required
+            class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-uss-green focus:ring-2 focus:ring-green-100"
+          />
+        </div>
+
+        <div>
+          <label
+            for="student-career"
+            class="mb-2 block text-xs font-bold text-slate-700"
+          >
+            Carrera de interés
+          </label>
+          <select
+            id="student-career"
+            name="career"
+            required
+            class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-uss-green focus:ring-2 focus:ring-green-100"
+          >
+            <option value="">Selecciona una carrera</option>
+            {
+              careers.map((career) => (
+                <option value={career.name}>{career.name}</option>
+              ))
+            }
+          </select>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label
+            class="flex items-start gap-2 text-xs leading-relaxed text-slate-500"
+          >
+            <input
+              type="checkbox"
+              id="student-privacy"
+              required
+              class="mt-0.5 accent-lime-500"
+            />
+            <span>
+              Acepto el tratamiento de mis datos personales conforme a la
+              <a
+                href="/politica-de-privacidad"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-bold text-green-700 underline"
+              >
+                política de privacidad
+              </a>
+              de la universidad.
+            </span>
+          </label>
+        </div>
+
+        <div class="sm:col-span-2">
+          <button
+            type="submit"
+            class="flex w-full items-center justify-center gap-3 rounded-lg bg-uss-green px-5 py-4 text-sm font-bold text-uss-dark transition hover:brightness-95 sm:w-fit"
+          >
+            <span>Enviar y hablar por WhatsApp</span>
+            <span class="text-lg">↗</span>
+          </button>
+        </div>
+      </form>
+
+      <div
+        class="flex flex-col items-center border-t border-slate-200 pt-7 text-center lg:border-l lg:border-t-0 lg:pl-7 lg:pt-0"
+      >
+        <div
+          class="flex h-16 w-16 items-center justify-center rounded-full bg-uss-green text-3xl"
+        >
+          ☎
+        </div>
+
+        <h3 class="mt-4 text-sm font-black text-uss-text">
+          ¿Prefieres escribirnos?
+        </h3>
+
+        <p class="mt-2 text-xs leading-relaxed text-slate-500">
+          También puedes comunicarte directamente con nuestro equipo.
+        </p>
+
+        <a
+          id="direct-whatsapp"
+          href="#contacto-carrera"
+          class="mt-5 rounded-lg border border-uss-green px-5 py-3 text-xs font-bold text-green-700 transition hover:bg-uss-green hover:text-uss-dark"
+        >
+          Chatear por WhatsApp →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector("#career-contact-form");
+
+  // Reemplazar por el número oficial de WhatsApp de Admisión USS.
+  // Formato: código de país + número, sin espacios ni signos.
+  const whatsappNumber = "519XXXXXXXX";
+
+  function openWhatsApp(message) {
+    if (whatsappNumber.includes("X")) {
+      alert(
+        "Primero configura el número oficial de WhatsApp de Admisión USS en CareerContact.astro.",
+      );
+      return;
+    }
+
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (!form.reportValidity()) return;
+
+    const formData = new FormData(form);
+
+    const name = formData.get("name");
+    const phone = formData.get("phone");
+    const email = formData.get("email");
+    const career = formData.get("career");
+
+    const message = [
+      "Hola, estoy interesado(a) en recibir información sobre las carreras profesionales de la Universidad Señor de Sipán - Filial Piura.",
+      "",
+      "*Datos del estudiante:*",
+      `Nombre: ${name}`,
+      `Celular: ${phone}`,
+      `Correo: ${email}`,
+      `Carrera de interés: ${career}`,
+      "",
+      "Solicito información sobre el proceso de admisión y los requisitos de inscripción.",
+    ].join("\n");
+
+    openWhatsApp(message);
+  });
+
+  document
+    .querySelector("#direct-whatsapp")
+    ?.addEventListener("click", (event) => {
+      event.preventDefault();
+      openWhatsApp(
+        "Hola, quisiera recibir información sobre las carreras profesionales de la Universidad Señor de Sipán - Filial Piura.",
+      );
+    });
+</script>

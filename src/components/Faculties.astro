@@ -1,0 +1,74 @@
+---
+import { faculties } from "../data/careers";
+
+const images = {
+  facem: "/public/carreras-hero.webp",
+  facsa: "/public/carreras-hero.webp",
+  fiau: "/public/carreras-hero.webp",
+  fdh: "/public/carreras-hero.webp",
+};
+---
+
+<section id="facultades" class="bg-white py-12">
+  <div class="container-uss">
+    <span class="mb-3 block h-1 w-10 bg-uss-green"></span>
+
+    <h2 class="text-3xl font-black tracking-tight text-uss-text">
+      Nuestras Facultades
+    </h2>
+
+    <p class="mt-2 text-sm text-slate-500">
+      Explora nuestras 4 facultades y descubre las 15 carreras profesionales que
+      tenemos para ti.
+    </p>
+
+    <div class="mt-7 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+      {
+        faculties.map((faculty) => (
+          <button
+            type="button"
+            data-faculty-filter={faculty.id}
+            class="group overflow-hidden rounded-xl border border-slate-200 bg-white text-left transition duration-300 hover:-translate-y-1 hover:border-uss-green hover:shadow-lg"
+          >
+            <div class="p-5">
+              <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-green-50 text-2xl text-green-600">
+                {faculty.icon === "chart" && "▥"}
+                {faculty.icon === "health" && "♡"}
+                {faculty.icon === "engineering" && "⚙"}
+                {faculty.icon === "law" && "⚖"}
+              </span>
+
+              <h3 class="mt-4 min-h-12 text-base font-bold leading-tight text-uss-text">
+                {faculty.name}
+              </h3>
+
+              <p class="mt-2 min-h-10 text-xs leading-relaxed text-slate-500">
+                {faculty.description}
+              </p>
+
+              <div class="mt-4 flex items-center justify-between">
+                <span class="text-[10px] font-extrabold tracking-wider text-green-700">
+                  {faculty.shortName}
+                </span>
+
+                <span class="flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 transition group-hover:border-uss-green group-hover:bg-uss-green">
+                  →
+                </span>
+              </div>
+            </div>
+
+            <div class="relative h-28 overflow-hidden">
+              <img
+                src={images[faculty.id]}
+                alt={`Estudiantes de ${faculty.name}`}
+                loading="lazy"
+                class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+              />
+              <div class="absolute bottom-0 left-0 h-3 w-2/3 -skew-x-12 bg-uss-green" />
+            </div>
+          </button>
+        ))
+      }
+    </div>
+  </div>
+</section>
