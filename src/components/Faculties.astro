@@ -1,74 +1,88 @@
 ---
-import { faculties } from "../data/careers";
-
-const images = {
-  facem: "/public/carreras-hero.webp",
-  facsa: "/public/carreras-hero.webp",
-  fiau: "/public/carreras-hero.webp",
-  fdh: "/public/carreras-hero.webp",
-};
+const faculties = [
+  {
+    icon: "academic",
+    title: "Facultad de Ciencias empresariales",
+    description:
+      "Una enseñanza de calidad, con docentes altamente calificados.",
+  },
+  {
+    icon: "bulb",
+    title: "facultad de ciencias de la salud",
+    description: "Generamos conocimiento para un mejor futuro.",
+  },
+  {
+    icon: "globe",
+    title: "Facultad de ingieneria y urbanismo",
+    description: "Alianzas internacionales y más oportunidades para ti.",
+  },
+  {
+    icon: "globe",
+    title: "Facultad de derecho y humanidades",
+    description: "Alianzas internacionales y más oportunidades para ti.",
+  },
+];
 ---
 
-<section id="facultades" class="bg-white py-12">
-  <div class="container-uss">
-    <span class="mb-3 block h-1 w-10 bg-uss-green"></span>
+<section id="investigacion" class="border-b border-gray-100 bg-white">
+  <div
+    class="container-uss grid grid-cols-1 divide-y divide-gray-200 py-7 md:grid-cols-4 md:divide-x md:divide-y-0 md:py-9"
+  >
+    {
+      faculties.map((faculty) => (
+        <article class="flex items-center gap-4 py-5 first:pt-0 last:pb-0 md:px-7 md:py-0 md:first:pl-0 md:last:pr-0">
+          <div class="flex h-15.5 w-15.5 shrink-0 items-center justify-center rounded-2xl border-2 border-uss-green text-uss-green">
+            {faculty.icon === "academic" && (
+              <svg
+                viewBox="0 0 48 48"
+                class="h-10 w-10"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path d="m4 17 20-9 20 9-20 9L4 17Z" />
+                <path d="M12 21v10c7 7 17 7 24 0V21M44 17v14" />
+                <path d="M22 26v8h4v-8" />
+              </svg>
+            )}
 
-    <h2 class="text-3xl font-black tracking-tight text-uss-text">
-      Nuestras Facultades
-    </h2>
+            {faculty.icon === "bulb" && (
+              <svg
+                viewBox="0 0 48 48"
+                class="h-10 w-10"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path d="M17 30c0-4-6-7-6-14a13 13 0 0 1 26 0c0 7-6 10-6 14H17Z" />
+                <path d="M18 35h12M20 39h8M24 9v5M8 16h5M35 16h5M15 7l4 4M33 7l-4 4" />
+                <path d="M24 17v9m-4-5 4-4 4 4" />
+              </svg>
+            )}
 
-    <p class="mt-2 text-sm text-slate-500">
-      Explora nuestras 4 facultades y descubre las 15 carreras profesionales que
-      tenemos para ti.
-    </p>
+            {faculty.icon === "globe" && (
+              <svg
+                viewBox="0 0 48 48"
+                class="h-10 w-10"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <circle cx="24" cy="24" r="19" />
+                <ellipse cx="24" cy="24" rx="9" ry="19" />
+                <path d="M6 17h36M6 31h36M7 23h34" />
+              </svg>
+            )}
+          </div>
 
-    <div class="mt-7 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-      {
-        faculties.map((faculty) => (
-          <button
-            type="button"
-            data-faculty-filter={faculty.id}
-            class="group overflow-hidden rounded-xl border border-slate-200 bg-white text-left transition duration-300 hover:-translate-y-1 hover:border-uss-green hover:shadow-lg"
-          >
-            <div class="p-5">
-              <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-green-50 text-2xl text-green-600">
-                {faculty.icon === "chart" && "▥"}
-                {faculty.icon === "health" && "♡"}
-                {faculty.icon === "engineering" && "⚙"}
-                {faculty.icon === "law" && "⚖"}
-              </span>
-
-              <h3 class="mt-4 min-h-12 text-base font-bold leading-tight text-uss-text">
-                {faculty.name}
-              </h3>
-
-              <p class="mt-2 min-h-10 text-xs leading-relaxed text-slate-500">
-                {faculty.description}
-              </p>
-
-              <div class="mt-4 flex items-center justify-between">
-                <span class="text-[10px] font-extrabold tracking-wider text-green-700">
-                  {faculty.shortName}
-                </span>
-
-                <span class="flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 transition group-hover:border-uss-green group-hover:bg-uss-green">
-                  →
-                </span>
-              </div>
-            </div>
-
-            <div class="relative h-28 overflow-hidden">
-              <img
-                src={images[faculty.id]}
-                alt={`Estudiantes de ${faculty.name}`}
-                loading="lazy"
-                class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-              />
-              <div class="absolute bottom-0 left-0 h-3 w-2/3 -skew-x-12 bg-uss-green" />
-            </div>
-          </button>
-        ))
-      }
-    </div>
+          <div>
+            <h2 class="text-[13px] font-bold text-uss-text">{faculty.title}</h2>
+            <p class="mt-2 max-w-[220px] text-[11px] leading-[1.6] text-uss-muted">
+              {faculty.description}
+            </p>
+          </div>
+        </article>
+      ))
+    }
   </div>
 </section>

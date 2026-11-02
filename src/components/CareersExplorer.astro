@@ -1,265 +1,1003 @@
 ---
 import { careers, faculties } from "../data/careers.js";
+
+const initialCareer = careers.find((career) => career.id === "enfermeria") ?? careers[0];
 ---
 
-<section id="explorador" class="bg-slate-50 py-16">
-  <div class="container-uss">
-    <div class="mb-8">
-      <span class="mb-3 block h-1 w-10 bg-uss-green"></span>
-      <p class="text-xs font-bold uppercase tracking-[2px] text-green-700">
-        Encuentra tu futuro
-      </p>
-      <h2 class="mt-2 text-3xl font-black text-uss-text sm:text-4xl">
-        Nuestras carreras
-      </h2>
-    </div>
+<section id="explorador" class="career-explorer bg-uss-light">
+  <div class="career-layout">
 
-    <div class="grid items-start gap-6 lg:grid-cols-[260px_1fr]">
-      <!-- LISTADO DE CARRERAS -->
-      <aside class="rounded-xl border border-slate-200 bg-white p-4">
-        <h3 class="mb-4 text-sm font-black text-uss-text">
-          Selecciona una carrera
-        </h3>
+    <!-- LISTADO LATERAL -->
+    <aside class="career-sidebar">
+      <div class="section-heading">
+        <span class="heading-line"></span>
+        <h2>Nuestras Carreras</h2>
+      </div>
 
-        <label class="relative mb-4 block">
-          <span class="sr-only">Buscar carrera</span>
-          <input
-            id="career-search"
-            type="search"
-            placeholder="Buscar carrera..."
-            class="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-xs outline-none transition focus:border-uss-green focus:ring-2 focus:ring-green-100"
-          />
-        </label>
+      <label class="career-search">
+        <span class="sr-only">Buscar carrera</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m20 20-4-4"></path>
+        </svg>
+        <input id="career-search" type="search" placeholder="Buscar carrera..." />
+      </label>
 
-        <div id="career-list" class="flex flex-col gap-2">
-          {
-            faculties.map((faculty) => (
-              <div class="mb-3" data-faculty-group={faculty.id}>
-                <p class="mb-2 px-2 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
-                  {faculty.shortName}
-                </p>
+      <nav id="career-list" class="career-list" aria-label="Listado de carreras">
+        {careers.map((career) => (
+          <button
+            type="button"
+            data-career={career.id}
+            data-name={career.name.toLowerCase()}
+            class:list={["career-option", career.id === initialCareer?.id && "active-career"]}
+            aria-pressed={career.id === initialCareer?.id ? "true" : "false"}
+          >
+            <span class="career-option-icon" aria-hidden="true">
+              <img
+    src={career.icon.src}
+    alt=""
+    width="28"
+    height="28"
+  />
+            </span>
+            <span class="career-option-name">{career.name}</span>
+            <span class="career-option-arrow" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-compact-right"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M11 4l3 8l-3 8" /></svg>
+            </span>
+          </button>
+        ))}
+      </nav>
 
-                <div class="flex flex-col gap-1">
-                  {careers
-                    .filter((career) => career.faculty === faculty.shortName)
-                    .map((career) => (
-                      <button
-                        type="button"
-                        data-career={career.id}
-                        data-name={career.name.toLowerCase()}
-                        class:list={[
-                          "career-option flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-xs font-medium transition hover:bg-green-50",
-                          career.id === "enfermeria"
-                            ? "active-career bg-uss-green text-uss-dark"
-                            : "text-slate-700",
-                        ]}
-                      >
-                        <span class="text-base">◈</span>
-                        <span class="flex-1 leading-snug">{career.name}</span>
-                        <span>›</span>
-                      </button>
-                    ))}
+      <p class="career-count">{careers.length} carreras profesionales</p>
+    </aside>
+
+    <!-- PANEL PRINCIPAL -->
+    <div class="career-main">
+      <article class="career-card">
+
+        <!-- CABECERA -->
+        <header class="career-hero">
+          <div class="career-hero-copy">
+
+            <div class="career-breadcrumb">
+              <span>Carreras</span>
+              <span aria-hidden="true">›</span>
+              <strong id="career-breadcrumb">{initialCareer?.name}</strong>
+            </div>
+
+            <span id="career-faculty" class="career-faculty">
+              {initialCareer?.faculty}
+            </span>
+
+            <h1 id="career-title" >{initialCareer?.name}</h1>
+
+            <p id="career-description">
+              {initialCareer?.description}
+            </p>
+
+            <!-- INFORMACIÓN ACADÉMICA -->
+            <div class="career-facts">
+
+              <div class="career-fact">
+                <svg viewBox="0 0 32 32" aria-hidden="true">
+                  <rect x="4" y="7" width="24" height="21" rx="2"></rect>
+                  <path d="M10 3v8M22 3v8M4 13h24M11 19h3M18 19h3M11 24h3"></path>
+                </svg>
+                <div>
+                  <span>Duración de estudios</span>
+                  <strong id="career-duration">{initialCareer?.duration}</strong>
                 </div>
               </div>
-            ))
-          }
+
+              <div class="career-fact">
+                <svg viewBox="0 0 32 32" aria-hidden="true">
+                  <path d="m2 11 14-7 14 7-14 7L2 11Z"></path>
+                  <path d="M8 15v8c5 4 11 4 16 0v-8M29 12v10"></path>
+                </svg>
+                <div>
+                  <span>Grado académico</span>
+                  <strong id="career-degree">{initialCareer?.degree}</strong>
+                </div>
+              </div>
+
+              <div class="career-fact">
+                <svg viewBox="0 0 32 32" aria-hidden="true">
+                  <path d="M5 5h22v17H5zM11 27h10M16 22v5"></path>
+                  <path d="m16 9 2 4 4 .6-3 3 .7 4.2-3.7-2-3.7 2 .7-4.2-3-3 4-.6 2-4Z"></path>
+                </svg>
+                <div>
+                  <span>Título profesional</span>
+                  <strong id="career-title-professional">
+                    {initialCareer?.professionalTitle}
+                  </strong>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- IMAGEN PRINCIPAL -->
+          <div class="career-hero-visual" aria-hidden="true">
+            <div class="career-hero-green"></div>
+       
+          </div>
+        </header>
+
+        <!-- PESTAÑAS -->
+        <div class="career-tabs" role="tablist" aria-label="Información de la carrera">
+
+          <button
+            type="button"
+            class="career-tab active-tab"
+            data-tab="plan"
+            role="tab"
+            aria-selected="true"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H20v17H7.5A3.5 3.5 0 0 0 4 22V5.5Z"></path>
+              <path d="M4 6v16M8 6h8"></path>
+            </svg>
+            Plan de Estudios
+          </button>
+
+          <button
+            type="button"
+            class="career-tab"
+            data-tab="profile"
+            role="tab"
+            aria-selected="false"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="7" r="4"></circle>
+              <path d="M4 21a8 8 0 0 1 16 0"></path>
+            </svg>
+            Perfil y Competencias
+          </button>
+
+          <button
+            type="button"
+            class="career-tab"
+            data-tab="certifications"
+            role="tab"
+            aria-selected="false"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="8" r="6"></circle>
+              <path d="m8 13-1 9 5-3 5 3-1-9"></path>
+              <path d="m10 8 1.3 1.3L14 6.5"></path>
+            </svg>
+            Certificaciones Progresivas
+          </button>
+
         </div>
 
-        <p
-          class="mt-4 border-t border-slate-100 pt-4 text-center text-[11px] text-slate-400"
-        >
-          {careers.length} carreras profesionales
-        </p>
-      </aside>
+        <!-- CONTENIDO -->
+        <div class="career-content">
 
-      <!-- INFORMACIÓN DE LA CARRERA -->
-      <div class="min-w-0">
-        <article
-          class="overflow-hidden rounded-xl border border-slate-200 bg-white"
-        >
-          <!-- CABECERA -->
-          <div class="relative overflow-hidden bg-white p-6 sm:p-8">
-            <div class="relative z-10 max-w-2xl">
-              <div class="mb-5 flex items-center gap-2 text-xs text-slate-400">
-                <a href="/" class="hover:text-green-700">Inicio</a>
-                <span>›</span>
-                <span>Carreras</span>
-                <span>›</span>
-                <span id="career-breadcrumb" class="font-bold text-slate-700">
-                  Enfermería
-                </span>
-              </div>
+        
+<!-- PLAN DE ESTUDIOS -->
+<div
+  id="tab-plan"
+  class="career-panel space-y-5"
+  role="tabpanel"
+>
+  <!-- Visor PDF -->
+  <div class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-sm">
 
-              <span
-                id="career-faculty"
-                class="rounded-md bg-green-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-green-700"
-              >
-                FACSA
-              </span>
+    <!-- Barra superior -->
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 bg-white px-4 py-3">
 
-              <h2
-                id="career-title"
-                class="mt-5 max-w-xl text-3xl font-black tracking-tight text-uss-text sm:text-4xl"
-              >
-                Enfermería
-              </h2>
-
-              <p
-                id="career-description"
-                class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600"
-              >
-                Formamos profesionales calificados para brindar un cuidado
-                humanizado y resolver situaciones propias de la enfermería.
-              </p>
-
-              <div
-                class="mt-7 grid gap-5 border-t border-slate-100 pt-6 sm:grid-cols-3"
-              >
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl text-green-500">▦</span>
-                  <div>
-                    <p class="text-[10px] text-slate-500">
-                      Duración de estudios
-                    </p>
-                    <p
-                      id="career-duration"
-                      class="mt-1 text-xs font-bold text-uss-text"
-                    >
-                      10 ciclos académicos
-                    </p>
-                  </div>
-                </div>
-
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl text-green-500">◇</span>
-                  <div>
-                    <p class="text-[10px] text-slate-500">Grado académico</p>
-                    <p
-                      id="career-degree"
-                      class="mt-1 text-xs font-bold text-uss-text"
-                    >
-                      Bachiller en Enfermería
-                    </p>
-                  </div>
-                </div>
-
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl text-green-500">♧</span>
-                  <div>
-                    <p class="text-[10px] text-slate-500">Título profesional</p>
-                    <p
-                      id="career-title-professional"
-                      class="mt-1 text-xs font-bold text-uss-text"
-                    >
-                      Licenciado en Enfermería
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-green-50"
-            >
-            </div>
-            <div
-              class="pointer-events-none absolute -bottom-16 right-0 h-24 w-32 -skew-x-12 bg-uss-green"
-            >
-            </div>
-          </div>
-
-          <!-- PESTAÑAS -->
-          <div
-            class="flex flex-wrap gap-2 border-t border-slate-100 bg-slate-50 p-4"
+      <div class="flex items-center gap-2">
+        <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-red-50 text-red-600">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           >
-            <button
-              type="button"
-              data-tab="plan"
-              class="career-tab rounded-lg bg-uss-green px-4 py-3 text-xs font-bold text-uss-dark"
-            >
-              ▣ Plan de estudios
-            </button>
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 2v6h6"/>
+            <path d="M8 13h8M8 17h8"/>
+          </svg>
+        </div>
 
-            <button
-              type="button"
-              data-tab="profile"
-              class="career-tab rounded-lg border border-slate-200 bg-white px-4 py-3 text-xs font-bold text-slate-600 hover:border-uss-green"
-            >
-              ♙ Perfil y competencias
-            </button>
-
-            <button
-              type="button"
-              data-tab="certifications"
-              class="career-tab rounded-lg border border-slate-200 bg-white px-4 py-3 text-xs font-bold text-slate-600 hover:border-uss-green"
-            >
-              ♙ Certificaciones progresivas
-            </button>
-          </div>
-
-          <!-- CONTENIDO -->
-          <div class="min-h-56 p-6 sm:p-8">
-            <div id="tab-plan" class="career-panel">
-              <h3 class="text-xl font-black text-uss-text">Plan de estudios</h3>
-
-              <p
-                id="career-plan"
-                class="mt-4 max-w-2xl text-sm leading-7 text-slate-600"
-              >
-                El plan de estudios de Enfermería está pendiente de incorporar.
-              </p>
-
-              <a
-                id="career-plan-link"
-                href="#contacto-carrera"
-                class="mt-6 inline-flex items-center gap-3 rounded-lg border border-uss-green px-5 py-3 text-xs font-bold text-green-700 transition hover:bg-uss-green hover:text-uss-dark"
-              >
-                Consultar plan de estudios
-                <span>→</span>
-              </a>
-            </div>
-
-            <div id="tab-profile" class="career-panel hidden">
-              <h3 class="text-xl font-black text-uss-text">
-                Perfil y competencias
-              </h3>
-
-              <p
-                id="career-profile"
-                class="mt-4 max-w-2xl text-sm leading-7 text-slate-600"
-              >
-              </p>
-            </div>
-
-            <div id="tab-certifications" class="career-panel hidden">
-              <h3 class="text-xl font-black text-uss-text">
-                Certificaciones progresivas
-              </h3>
-
-              <p
-                id="career-certifications"
-                class="mt-4 max-w-2xl text-sm leading-7 text-slate-600"
-              >
-              </p>
-            </div>
-          </div>
-        </article>
+        <div>
+          <p class="text-sm font-bold text-slate-800">
+            Documento académico
+          </p>
+          <p class="text-xs text-slate-400">
+            Formato PDF
+          </p>
+        </div>
       </div>
+
+      <a
+        id="career-plan-download"
+        href={initialCareer?.studyPlan ?? "https://www.uss.edu.pe/uss/TransparenciaDoc/Plan/Presencial/ENFERMERIA.pdf"}
+        download
+        class="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-xs font-bold text-white transition hover:bg-green-700"
+      >
+        Descargar PDF
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <path d="m7 10 5 5 5-5"/>
+          <path d="M12 15V3"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- PDF integrado -->
+    <div class="relative h-137.5 w-full bg-slate-200 md:h-175">
+
+      <iframe
+        id="career-plan-viewer"
+        src={initialCareer?.studyPlan ?? ""}
+        title="Visor del plan de estudios"
+        class="h-full w-full border-0"
+      >
+      </iframe>
+
+    </div>
+  </div>
+</div>
+
+
+          <!-- PERFIL Y COMPETENCIAS -->
+          <div id="tab-profile" class="career-panel" role="tabpanel" hidden>
+            <img
+              class="career-content-image"
+              src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=85"
+              alt="Profesionales de salud trabajando"
+              loading="lazy"
+            />
+
+            <div class="career-content-copy">
+              <h2>Perfil y Competencias</h2>
+              <p id="career-profile">{initialCareer?.profile}</p>
+            </div>
+          </div>
+
+        <!-- CERTIFICACIONES -->
+<div
+  id="tab-certifications"
+  class="career-panel space-y-6"
+  role="tabpanel"
+  hidden
+>
+  <!-- Encabezado -->
+  <div class="flex flex-col gap-2">
+    <span class="text-xs font-bold uppercase tracking-[0.2em] text-green-600">
+      Formación profesional
+    </span>
+
+    <h2 class="text-2xl md:text-3xl font-bold text-slate-900">
+      Certificaciones Progresivas
+    </h2>
+
+    <p class="text-sm md:text-base text-slate-500 max-w-2xl">
+      Durante tu formación podrás obtener certificaciones que reconocen
+      progresivamente tus competencias profesionales.
+    </p>
+  </div>
+
+  <!-- Tarjetas de certificaciones -->
+  <div
+    id="career-certifications"
+    class="grid grid-cols-1 md:grid-cols-3 gap-4"
+  >
+    {initialCareer?.certifications?.map((certification, index) => (
+      <article
+        class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-green-300 hover:shadow-xl"
+      >
+        <!-- Número -->
+        <div class="mb-5 flex items-center justify-between">
+          <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-green-50 text-lg font-extrabold text-green-700">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+
+          <span class="rounded-full bg-green-50 px-3 py-1.5 text-[10px] font-bold tracking-wider text-green-700">
+            {certification.cycle}
+          </span>
+        </div>
+
+        <!-- Icono -->
+        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-slate-50 text-green-600 transition-colors group-hover:bg-green-600 group-hover:text-white">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="25"
+            height="25"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 15l-2 5-1.5-3.5L5 15l5-2" />
+            <path d="M12 15l2 5 1.5-3.5L19 15l-5-2" />
+            <circle cx="12" cy="8" r="6" />
+            <path d="m9.5 8 1.5 1.5L14.5 6" />
+          </svg>
+        </div>
+
+        <!-- Nombre -->
+        <h3 class="text-base font-bold leading-snug text-slate-800">
+          {certification.name}
+        </h3>
+
+        <div class="mt-5 flex items-center gap-2 border-t border-slate-100 pt-4">
+          <span class="h-2 w-2 rounded-full bg-green-500"></span>
+          <span class="text-xs font-medium text-slate-500">
+            Certificación progresiva
+          </span>
+        </div>
+
+        <!-- Decoración -->
+        <div class="absolute -bottom-8 -right-8 h-24 w-24 rounded-full bg-green-50 transition-transform duration-300 group-hover:scale-150"></div>
+      </article>
+    ))}
+  </div>
+</div>
+
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
 <style>
+  .career-explorer {
+    --career-green: #80f000;
+    --career-green-dark: #55bd00;
+    --career-ink: #171d25;
+    --career-muted: #626b78;
+    --career-border: #e8ebef;
+
+    padding: 48px 0 64px;
+    color: var(--career-ink);
+    font-family: inherit;
+  }
+
+  .career-layout {
+    width: min(1540px, calc(100% - 6vw));
+    margin-inline: auto;
+
+    display: grid;
+    grid-template-columns: minmax(285px, 0.34fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 22px;
+  }
+
+  /* SIDEBAR */
+
+  .career-sidebar {
+    min-width: 0;
+  }
+
+  .section-heading {
+    margin: 0 0 16px;
+  }
+
+  .heading-line {
+    display: block;
+    width: 62px;
+    height: 4px;
+    margin-bottom: 14px;
+    border-radius: 99px;
+    background: var(--career-green);
+  }
+
+  .section-heading h2 {
+    margin: 0;
+    font-size: clamp(22px, 2vw, 29px);
+    line-height: 1.15;
+    font-weight: 850;
+    letter-spacing: -0.04em;
+  }
+
+  /* BUSCADOR */
+
+  .career-search {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin: 0 0 12px;
+    padding: 0 13px;
+    height: 42px;
+
+    border: 1px solid var(--career-border);
+    border-radius: 9px;
+    background: #f8f9fa;
+    color: #8a929d;
+  }
+
+  .career-search svg {
+    width: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+  }
+
+  .career-search input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--career-ink);
+    font: inherit;
+    font-size: 12px;
+  }
+
+  /* LISTA DE CARRERAS */
+
+  .career-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .career-option {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    width: 100%;
+    min-height: 51px;
+    padding: 9px 15px;
+
+    border: 1px solid transparent;
+    border-radius: 9px;
+
+    background: #f5f6f8;
+    color: #202630;
+
+    text-align: left;
+    cursor: pointer;
+
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+  }
+
+  .career-option:hover {
+    background: #edf9e5;
+    transform: translateX(2px);
+  }
+
   .career-option.active-career {
-    background-color: var(--color-uss-green, #80f000);
+    background: var(--career-green);
     color: #172018;
     font-weight: 800;
   }
 
+  .career-option-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 28px;
+    font-size: 25px;
+    line-height: 1;
+  }
+
+  .career-option-name {
+    flex: 1;
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .career-option-arrow {
+    font-size: 27px;
+    line-height: 1;
+  }
+
+  .career-count {
+    margin: 13px 0 0;
+    padding-top: 13px;
+    border-top: 1px solid #edf0f2;
+
+    color: #8a929d;
+    text-align: center;
+    font-size: 11px;
+  }
+
+  /* PANEL PRINCIPAL */
+
+  .career-card {
+    overflow: hidden;
+    border: 1px solid var(--career-border);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgb(20 30 40 / 3%);
+  }
+
+  /* CABECERA */
+
+  .career-hero {
+    position: relative;
+    isolation: isolate;
+
+    display: flex;
+    min-height: 330px;
+    overflow: hidden;
+
+    padding: 30px 28px 26px;
+    border-radius: 13px 13px 0 0;
+    background: #fff;
+  }
+
+  .career-hero-copy {
+    position: relative;
+    z-index: 2;
+    width: 67%;
+    max-width: 760px;
+  }
+
+  .career-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    margin-bottom: 15px;
+
+    color: #5f6874;
+    font-size: 13px;
+  }
+
+  .career-breadcrumb strong {
+    color: #202630;
+    font-weight: 700;
+  }
+
+  .career-faculty {
+    display: inline-block;
+    padding: 5px 9px;
+
+    border-radius: 5px;
+    background: #efffe3;
+    color: #4e9d00;
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .08em;
+  }
+
+  .career-hero h1 {
+    margin: 0;
+
+    color: var(--career-ink);
+  font-size: clamp(30px, 3vw, 46px);
+    line-height: 1.08;
+    font-weight: 900;
+    letter-spacing: -.045em;
+  }
+
+  .career-hero-copy > p {
+    max-width: 660px;
+    margin: 13px 0 0;
+
+    color: #626b78;
+    font-size: clamp(14px, 1.3vw, 19px);
+    line-height: 1.45;
+  }
+
+  /* DATOS ACADÉMICOS */
+
+  .career-facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+
+    margin-top: 36px;
+    max-width: 790px;
+  }
+
+  .career-fact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .career-fact svg {
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+
+    fill: none;
+    stroke: var(--career-green-dark);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .career-fact span,
+  .career-fact strong {
+    display: block;
+  }
+
+  .career-fact span {
+    margin-bottom: 3px;
+    color: #59616b;
+    font-size: 11px;
+  }
+
+  .career-fact strong {
+    color: #202630;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  /* IMAGEN DE CABECERA */
+
+  .career-hero-visual {
+    position: absolute;
+    z-index: 1;
+
+    top: 0;
+    right: 0;
+
+    width: 39%;
+    height: 100%;
+    overflow: hidden;
+
+    clip-path: polygon(
+      12% 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      0 28%
+    );
+  }
+
+  .career-hero-visual img {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  .career-hero-green {
+    position: absolute;
+    z-index: 2;
+
+    top: 17%;
+    right: -50px;
+
+    width: 110px;
+    height: 100%;
+
+    transform: skewY(-32deg);
+    background: var(--career-green);
+    opacity: .96;
+  }
+
+  /* PESTAÑAS */
+
+  .career-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    padding: 7px 26px;
+
+    border-top: 1px solid #f0f1f3;
+    background: #f7f8f9;
+  }
+
+  .career-tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    min-height: 54px;
+    padding: 0 21px;
+
+    border: 1px solid transparent;
+    border-radius: 11px;
+
+    background: #eef0f2;
+    color: #28303a;
+
+    font-size: 13px;
+    font-weight: 750;
+
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+  }
+
+  .career-tab svg {
+    width: 23px;
+    height: 23px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .career-tab:hover {
+    background: #e5f7d9;
+  }
+
   .career-tab.active-tab {
-    background-color: var(--color-uss-green, #80f000);
-    border-color: transparent;
+    background: var(--career-green);
     color: #172018;
+  }
+
+  /* CONTENIDO DE LAS PESTAÑAS */
+
+  .career-content {
+    padding: 0 26px 8px;
+  }
+
+  .career-panel {
+  
+    align-items: center;
+    gap: 30px;
+
+  
+  }
+
+  .career-panel[hidden] {
+    display: none;
+  }
+
+  .career-content-image {
+    display: block;
+    width: 100%;
+    height: 202px;
+
+    border-radius: 11px;
+    object-fit: cover;
+  }
+
+  .career-content-copy {
+    padding: 18px 0;
+  }
+
+  .career-content-copy h2 {
+    margin: 0 0 8px;
+
+    color: var(--career-ink);
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 850;
+    letter-spacing: -.03em;
+  }
+
+  .career-content-copy p {
+    max-width: 650px;
+    margin: 0;
+
+    color: #626b78;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  /* BOTÓN */
+
+  .career-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 13px;
+
+    margin-top: 15px;
+    padding: 11px 20px;
+
+    border: 2px solid #8af000;
+    border-radius: 10px;
+
+    color: #387d00;
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+
+    transition: background .2s ease, color .2s ease;
+  }
+
+  .career-link:hover {
+    background: var(--career-green);
+    color: #172018;
+  }
+
+  .career-link span {
+    font-size: 19px;
+    line-height: 1;
+  }
+
+  /* TABLETS */
+
+  @media (max-width: 1050px) {
+    .career-layout {
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .career-hero {
+      min-height: 360px;
+      padding: 25px 22px;
+    }
+
+    .career-hero-copy {
+      width: 72%;
+    }
+
+    .career-hero-visual {
+      width: 35%;
+      opacity: .9;
+    }
+
+    .career-facts {
+      gap: 9px;
+      margin-top: 25px;
+    }
+
+    .career-fact {
+      gap: 6px;
+    }
+
+    .career-fact svg {
+      flex-basis: 27px;
+      width: 27px;
+      height: 27px;
+    }
+
+    .career-fact span,
+    .career-fact strong {
+      font-size: 10px;
+    }
+
+    .career-tabs {
+      padding-inline: 16px;
+    }
+
+    .career-tab {
+      padding-inline: 14px;
+      font-size: 12px;
+    }
+
+    .career-content {
+      padding-inline: 16px;
+    }
+
+    .career-panel {
+      gap: 20px;
+    }
+  }
+
+  /* CELULARES */
+
+  @media (max-width: 760px) {
+    .career-explorer {
+      padding: 32px 0 44px;
+    }
+
+    .career-layout {
+      width: min(100% - 28px, 620px);
+      grid-template-columns: 1fr;
+    }
+
+    .section-heading {
+      margin-bottom: 13px;
+    }
+
+    .career-list {
+      display: grid;
+      grid-auto-columns: minmax(220px, 78%);
+      grid-auto-flow: column;
+
+      overflow-x: auto;
+      padding: 2px 1px 9px;
+
+      scroll-snap-type: x mandatory;
+    }
+
+    .career-option {
+      scroll-snap-align: start;
+      min-height: 54px;
+    }
+
+    .career-count {
+      display: none;
+    }
+
+    .career-hero {
+      min-height: auto;
+      padding: 23px 20px 22px;
+    }
+
+    .career-hero-copy {
+      width: 100%;
+    }
+
+    .career-hero-visual {
+      position: relative;
+      top: auto;
+      right: auto;
+      display: none;
+    }
+
+    .career-hero h1 {
+      font-size: 36px;
+    }
+
+    .career-hero-copy > p {
+      max-width: 100%;
+      font-size: 14px;
+    }
+
+    .career-facts {
+      grid-template-columns: 1fr;
+      gap: 13px;
+      margin-top: 23px;
+    }
+
+    .career-fact svg {
+      flex-basis: 30px;
+      width: 30px;
+      height: 30px;
+    }
+
+    .career-fact span,
+    .career-fact strong {
+      font-size: 11px;
+    }
+
+    .career-tabs {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 7px;
+      padding: 12px;
+    }
+
+    .career-tab {
+      justify-content: flex-start;
+      min-height: 48px;
+    }
+
+    .career-content {
+      padding: 12px;
+    }
+
+    .career-panel {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .career-content-image {
+      height: 190px;
+    }
+
+    .career-content-copy {
+      padding: 5px 2px 12px;
+    }
+
+    .career-content-copy h2 {
+      font-size: 21px;
+    }
+
+    .career-content-copy p {
+      font-size: 14px;
+    }
   }
 </style>
 
@@ -281,95 +1019,105 @@ import { careers, faculties } from "../data/careers.js";
     certifications: document.querySelector("#career-certifications"),
   };
 
+  // CAMBIAR CARRERA
   function selectCareer(id) {
     const career = careers.find((item) => item.id === id);
+
     if (!career) return;
 
-    fields.title.textContent = career.name;
-    fields.breadcrumb.textContent = career.name;
-    fields.faculty.textContent = career.faculty;
-    fields.description.textContent = career.description;
-    fields.duration.textContent = career.duration;
-    fields.degree.textContent = career.degree;
-    fields.professionalTitle.textContent = career.professionalTitle;
-    fields.plan.textContent = career.studyPlan;
-    fields.profile.textContent = career.profile;
-    fields.certifications.textContent = career.certifications;
+    fields.title.textContent = career.name ?? "";
+    fields.breadcrumb.textContent = career.name ?? "";
+    fields.faculty.textContent = career.faculty ?? "";
+    fields.description.textContent = career.description ?? "";
+
+    fields.duration.textContent = career.duration ?? "Por definir";
+    fields.degree.textContent = career.degree ?? "Por definir";
+
+    fields.professionalTitle.textContent =
+      career.professionalTitle ?? "Por definir";
+
+    fields.plan.textContent =
+      career.studyPlan ?? "Información pendiente de incorporar.";
+
+    fields.profile.textContent =
+      career.profile ?? "Información pendiente de incorporar.";
+
+    fields.certifications.textContent =
+      career.certifications ?? "Información pendiente de incorporar.";
 
     careerButtons.forEach((button) => {
       const active = button.dataset.career === id;
+
       button.classList.toggle("active-career", active);
+      button.setAttribute("aria-pressed", String(active));
     });
 
-    document.querySelector("#tab-plan").classList.remove("hidden");
+    showTab("plan");
+  }
 
+  // CAMBIAR PESTAÑA
+  function showTab(tabName) {
     document.querySelectorAll(".career-panel").forEach((panel) => {
-      panel.classList.add("hidden");
+      panel.hidden = panel.id !== `tab-${tabName}`;
     });
-
-    document.querySelector("#tab-plan").classList.remove("hidden");
 
     careerTabs.forEach((tab) => {
-      tab.classList.toggle("active-tab", tab.dataset.tab === "plan");
+      const active = tab.dataset.tab === tabName;
+
+      tab.classList.toggle("active-tab", active);
+      tab.setAttribute("aria-selected", String(active));
     });
   }
 
+  // EVENTOS DE CARRERAS
   careerButtons.forEach((button) => {
     button.addEventListener("click", () => {
       selectCareer(button.dataset.career);
     });
   });
 
+  // EVENTOS DE PESTAÑAS
   careerTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      const selectedTab = tab.dataset.tab;
-
-      document.querySelectorAll(".career-panel").forEach((panel) => {
-        panel.classList.add("hidden");
-      });
-
-      document.querySelector(`#tab-${selectedTab}`).classList.remove("hidden");
-
-      careerTabs.forEach((item) => {
-        item.classList.toggle("active-tab", item === tab);
-      });
+      showTab(tab.dataset.tab);
     });
   });
 
+  // BUSCADOR
   searchInput?.addEventListener("input", () => {
-    const query = searchInput.value.toLowerCase().trim();
+    const query = searchInput.value.toLocaleLowerCase().trim();
 
-    document.querySelectorAll(".career-option").forEach((button) => {
+    careerButtons.forEach((button) => {
       const matches = button.dataset.name.includes(query);
-      button.classList.toggle("hidden", !matches);
-    });
 
-    document.querySelectorAll("[data-faculty-group]").forEach((group) => {
-      const visible = [...group.querySelectorAll(".career-option")].some(
-        (button) => !button.classList.contains("hidden"),
-      );
-
-      group.classList.toggle("hidden", !visible);
+      button.hidden = !matches;
     });
   });
 
+  // FILTRO POR FACULTAD
   document.querySelectorAll("[data-faculty-filter]").forEach((button) => {
     button.addEventListener("click", () => {
       const faculty = button.dataset.facultyFilter;
+
       const firstCareer = careers.find((career) => {
         return career.faculty === faculty;
       });
 
-      if (firstCareer) {
-        selectCareer(firstCareer.id);
+      if (!firstCareer) return;
 
-        document.querySelector("#explorador").scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
+      selectCareer(firstCareer.id);
+
+      document.querySelector("#explorador")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     });
   });
 
-  selectCareer("enfermeria");
+  // CARRERA INICIAL
+  if (careers.some((career) => career.id === "enfermeria")) {
+    selectCareer("enfermeria");
+  } else if (careers[0]) {
+    selectCareer(careers[0].id);
+  }
 </script>

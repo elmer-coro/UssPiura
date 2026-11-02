@@ -1,5 +1,26 @@
 ---
-const benefits = [
+const icons = {
+  academic: `<path d="m4 17 20-9 20 9-20 9L4 17Z" />
+    <path d="M12 21v10c7 7 17 7 24 0V21M44 17v14" />
+    <path d="M22 26v8h4v-8" />`,
+
+  bulb: `<path d="M17 30c0-4-6-7-6-14a13 13 0 0 1 26 0c0 7-6 10-6 14H17Z" />
+    <path d="M18 35h12M20 39h8M24 9v5M8 16h5M35 16h5M15 7l4 4M33 7l-4 4" />
+    <path d="M24 17v9m-4-5 4-4 4 4" />`,
+
+  globe: `<circle cx="24" cy="24" r="19" />
+    <ellipse cx="24" cy="24" rx="9" ry="19" />
+    <path d="M6 17h36M6 31h36M7 23h34" />`,
+};
+
+// Generamos el tipo automáticamente desde las claves de icons
+type IconName = keyof typeof icons;
+
+const benefits: {
+  icon: IconName;
+  title: string;
+  description: string;
+}[] = [
   {
     icon: "academic",
     title: "Excelencia académica",
@@ -19,60 +40,31 @@ const benefits = [
 ];
 ---
 
-<section id="investigacion" class="border-b border-gray-100 bg-white">
+<section id="investigacion" class="border-b border-gray-100">
   <div
-    class="container-uss grid grid-cols-1 divide-y divide-gray-200 py-7 md:grid-cols-3 md:divide-x md:divide-y-0 md:py-9"
+    class="container-uss grid divide-y divide-uss-gray py-7 md:grid-cols-3 md:divide-x md:divide-y-0 md:py-9"
   >
     {
       benefits.map((benefit) => (
         <article class="flex items-center gap-4 py-5 first:pt-0 last:pb-0 md:px-7 md:py-0 md:first:pl-0 md:last:pr-0">
-          <div class="flex h-[62px] w-[62px] shrink-0 items-center justify-center rounded-2xl border-2 border-uss-green text-uss-green">
-            {benefit.icon === "academic" && (
-              <svg
-                viewBox="0 0 48 48"
-                class="h-10 w-10"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-              >
-                <path d="m4 17 20-9 20 9-20 9L4 17Z" />
-                <path d="M12 21v10c7 7 17 7 24 0V21M44 17v14" />
-                <path d="M22 26v8h4v-8" />
-              </svg>
-            )}
-
-            {benefit.icon === "bulb" && (
-              <svg
-                viewBox="0 0 48 48"
-                class="h-10 w-10"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-              >
-                <path d="M17 30c0-4-6-7-6-14a13 13 0 0 1 26 0c0 7-6 10-6 14H17Z" />
-                <path d="M18 35h12M20 39h8M24 9v5M8 16h5M35 16h5M15 7l4 4M33 7l-4 4" />
-                <path d="M24 17v9m-4-5 4-4 4 4" />
-              </svg>
-            )}
-
-            {benefit.icon === "globe" && (
-              <svg
-                viewBox="0 0 48 48"
-                class="h-10 w-10"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-              >
-                <circle cx="24" cy="24" r="19" />
-                <ellipse cx="24" cy="24" rx="9" ry="19" />
-                <path d="M6 17h36M6 31h36M7 23h34" />
-              </svg>
-            )}
+          <div class="flex size-15.5 shrink-0 items-center justify-center rounded-2xl border-2 border-uss-green text-uss-green">
+            <svg
+              viewBox="0 0 48 48"
+              class="size-10"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              set:html={icons[benefit.icon]}
+            />
           </div>
 
           <div>
             <h2 class="text-[13px] font-bold text-uss-text">{benefit.title}</h2>
-            <p class="mt-2 max-w-[220px] text-[11px] leading-[1.6] text-uss-muted">
+
+            <p class="mt-2 max-w-55 text-[11px] leading-[1.6] text-uss-muted">
               {benefit.description}
             </p>
           </div>
